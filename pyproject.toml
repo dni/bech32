@@ -1,0 +1,23 @@
+[tool.poetry]
+name = "bech32"
+version = "2.0.0"
+description = "Pieter Wuille's reference implementation for Bech32 and segwit addresses "
+authors = ["Alan Bits <alan@lnbits.com>"]
+repository = "https://github.com/dni/bech32"
+license = "MIT"
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.10 | ^3.9"
+
+
+[tool.poetry.group.dev.dependencies]
+black = "^23.3.0"
+isort = "^5.12.0"
+flake8 = "^6.0.0"
+mypy = "^1.2.0"
+pyright = "^1.1.302"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
