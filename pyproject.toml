@@ -26,3 +26,6 @@ pyright = "^1.1.302"
 [build-system]
 requires = ["poetry-core"]
 build-backend = "poetry.core.masonry.api"
+
+[tool.mypy]
+files = [ "bech32", "tests" ]
