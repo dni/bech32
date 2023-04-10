@@ -1,11 +1,16 @@
 [tool.poetry]
 name = "bech32"
 version = "2.0.0"
-description = "Pieter Wuille's reference implementation for Bech32 and segwit addresses "
+description = "Pieter Wuille's reference implementation for Bech32 and segwit addresses."
 authors = ["Alan Bits <alan@lnbits.com>"]
 repository = "https://github.com/dni/bech32"
 license = "MIT"
 readme = "README.md"
+packages = [
+  {include = "bech32"},
+  {include = "bech32/py.typed"},
+]
+
 
 [tool.poetry.dependencies]
 python = "^3.10 | ^3.9"
