@@ -11,17 +11,18 @@ packages = [
   {include = "bech32/py.typed"},
 ]
 
-
 [tool.poetry.dependencies]
 python = "^3.10 | ^3.9"
-
+click = "^8.1.7"
 
 [tool.poetry.group.dev.dependencies]
-black = "^23.3.0"
+black = "^23.7.0"
 isort = "^5.12.0"
-flake8 = "^6.0.0"
-mypy = "^1.2.0"
-pyright = "^1.1.302"
+mypy = "^1.5.1"
+pyright = "^1.1.323"
+ruff = "^0.0.285"
+pre-commit = "^3.3.3"
+typing-extensions = "^4.7.1"
 
 [build-system]
 requires = ["poetry-core"]
@@ -29,3 +30,67 @@ build-backend = "poetry.core.masonry.api"
 
 [tool.mypy]
 files = [ "bech32", "tests" ]
+
+[tool.pyright]
+include = ["bech32", "tests"]
+
+[tool.pytest.ini_options]
+log_cli = true
+# addopts = "--durations=1 -s --cov=bech32 --cov-report=xml"
+testpaths = [
+  "tests"
+]
+
+[tool.black]
+line-length = 88
+
+[tool.ruff]
+line-length = 88
+
+# Enable pycodestyle (`E`) and Pyflakes (`F`) codes by default.
+select = ["E", "F", "I"]
+ignore = [
+]
+
+# Allow autofix for all enabled rules (when `--fix`) is provided.
+fixable = ["ALL"]
+unfixable = []
+
+# Exclude a variety of commonly ignored directories.
+exclude = [
+    ".bzr",
+    ".direnv",
+    ".eggs",
+    ".git",
+    ".git-rewrite",
+    ".hg",
+    ".mypy_cache",
+    ".nox",
+    ".pants.d",
+    ".pytype",
+    ".ruff_cache",
+    ".svn",
+    ".tox",
+    ".venv",
+    "__pypackages__",
+    "_build",
+    "buck-out",
+    "build",
+    "dist",
+    "node_modules",
+    "venv",
+]
+
+# Allow unused variables when underscore-prefixed.
+dummy-variable-rgx = "^(_+|(_+[a-zA-Z0-9_]*[a-zA-Z0-9]+?))$"
+
+# Assume Python
+# target-version = "py39"
+
+# Ignore unused imports in __init__.py files.
+[tool.ruff.extend-per-file-ignores]
+"__init__.py" = ["F401", "F403"]
+
+[tool.ruff.mccabe]
+# Unlike Flake8, default to a complexity level of 10.
+max-complexity = 10
