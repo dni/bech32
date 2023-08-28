@@ -5,7 +5,8 @@ from typing import Iterable, List, Tuple
 from .exceptions import Bech32Exception
 
 CHARSET = "qpzry9x8gf2tvdw0s3jn54khce6mua7l"
-BECH32M_CONST = 0x2bc830a3
+BECH32M_CONST = 0x2BC830A3
+
 
 def bech32_polymod(values: Iterable[int]) -> int:
     """Internal function that computes the Bech32 checksum."""
@@ -34,7 +35,9 @@ def bech32m_verify_checksum(hrp: str, data: Iterable[int]) -> bool:
     return 2 == bech32_polymod(bech32_hrp_expand(hrp) + list(data))
 
 
-def convertbits(data: Iterable[int], frombits: int, tobits: int, pad: bool = True) -> List[int]:
+def convertbits(
+    data: Iterable[int], frombits: int, tobits: int, pad: bool = True
+) -> List[int]:
     """General power-of-2 base conversion."""
     acc = 0
     bits = 0
@@ -43,7 +46,7 @@ def convertbits(data: Iterable[int], frombits: int, tobits: int, pad: bool = Tru
     max_acc = (1 << (frombits + tobits - 1)) - 1
     for value in data:
         if value < 0 or (value >> frombits):
-            raise Bech32Exception("convertbits exception");
+            raise Bech32Exception("convertbits exception")
         acc = ((acc << frombits) | value) & max_acc
         bits += frombits
         while bits >= tobits:
@@ -53,7 +56,7 @@ def convertbits(data: Iterable[int], frombits: int, tobits: int, pad: bool = Tru
         if bits:
             ret.append((acc << (tobits - bits)) & maxv)
     elif bits >= frombits or ((acc << (tobits - bits)) & maxv):
-        raise Bech32Exception("convertbits exception");
+        raise Bech32Exception("convertbits exception")
     return ret
 
 
@@ -88,13 +91,13 @@ def build_decode(bech: str) -> Tuple[str, List[int]]:
     if (any(ord(x) < 33 or ord(x) > 126 for x in bech)) or (
         bech.lower() != bech and bech.upper() != bech
     ):
-        raise Bech32Exception("Bech32 Decode Exception");
+        raise Bech32Exception("Bech32 Decode Exception")
     bech = bech.lower()
     pos = bech.rfind("1")
     if pos < 1 or pos > 83 or pos + 7 > len(bech):  # or len(bech) > 90:
-        raise Bech32Exception("Bech32 Decode Exception");
+        raise Bech32Exception("Bech32 Decode Exception")
     if not all(x in CHARSET for x in bech[pos + 1 :]):
-        raise Bech32Exception("Bech32 Decode Exception");
+        raise Bech32Exception("Bech32 Decode Exception")
     hrp = bech[:pos]
     data = [CHARSET.find(x) for x in bech[pos + 1 :]]
     return (hrp, data)
@@ -104,7 +107,7 @@ def bech32_decode(bech: str) -> Tuple[str, List[int], int]:
     """Validate a Bech32 string, and determine HRP and data."""
     hrp, data = build_decode(bech)
     if not bech32_verify_checksum(hrp, data):
-        raise Bech32Exception("Bech32 Decode Verify Checksum Exception");
+        raise Bech32Exception("Bech32 Decode Verify Checksum Exception")
     return hrp, data[:-6], 1
 
 
@@ -112,5 +115,5 @@ def bech32m_decode(bech: str) -> Tuple[str, List[int], int]:
     """Validate a Bech32m string, and determine HRP and data."""
     hrp, data = build_decode(bech)
     if not bech32_verify_checksum(hrp, data):
-        raise Bech32Exception("Bech32m Decode Verify Checksum Exception");
+        raise Bech32Exception("Bech32m Decode Verify Checksum Exception")
     return hrp, data[:-6], 2
