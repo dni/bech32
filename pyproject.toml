@@ -3,7 +3,7 @@ name = "bech32"
 version = "2.0.0"
 description = "Pieter Wuille's reference implementation for Bech32 and segwit addresses."
 authors = ["Alan Bits <alan@lnbits.com>"]
-repository = "https://github.com/dni/bech32"
+repository = "https://github.com/lnbits/bech32"
 license = "MIT"
 readme = "README.md"
 packages = [
@@ -36,7 +36,6 @@ include = ["bech32", "tests"]
 
 [tool.pytest.ini_options]
 log_cli = true
-# addopts = "--durations=1 -s --cov=bech32 --cov-report=xml"
 testpaths = [
   "tests"
 ]
