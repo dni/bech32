@@ -77,7 +77,7 @@ def bech32_encode(hrp, data, spec):
     return hrp + "1" + "".join([CHARSET[d] for d in combined])
 
 
-def bech32_decode(bech):
+def bech32_decode(bech: str, limit: int = 90):
     """Validate a Bech32/Bech32m string, and determine HRP and data."""
     if (any(ord(x) < 33 or ord(x) > 126 for x in bech)) or (
         bech.lower() != bech and bech.upper() != bech
@@ -85,7 +85,7 @@ def bech32_decode(bech):
         return (None, None, None)
     bech = bech.lower()
     pos = bech.rfind("1")
-    if pos < 1 or pos + 7 > len(bech) or len(bech) > 90:
+    if pos < 1 or pos + 7 > len(bech) or len(bech) > limit:
         return (None, None, None)
     if not all(x in CHARSET for x in bech[pos + 1 :]):
         return (None, None, None)
