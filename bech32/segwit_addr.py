@@ -123,8 +123,7 @@ def convertbits(data, frombits, tobits, pad=True):
 def decode(hrp, addr):
     """Decode a segwit address."""
     hrpgot, data, spec = bech32_decode(addr)
-    assert data
-    if hrpgot != hrp:
+    if not data or hrpgot != hrp:
         return (None, None)
     decoded = convertbits(data[1:], 5, 8, False)
     if decoded is None or len(decoded) < 2 or len(decoded) > 40:
@@ -147,7 +146,8 @@ def encode(hrp, witver, witprog):
     """Encode a segwit address."""
     spec = Encoding.BECH32 if witver == 0 else Encoding.BECH32M
     raw_witprog = convertbits(witprog, 8, 5)
-    assert raw_witprog
+    if not raw_witprog:
+        return None
     ret = bech32_encode(hrp, [witver] + raw_witprog, spec)
     if decode(hrp, ret) == (None, None):
         return None

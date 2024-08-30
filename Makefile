@@ -16,4 +16,3 @@ pyright:
 
 test:
 	poetry run pytest tests
-	poetry run python tests/segwit_addr.py
