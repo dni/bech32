@@ -17,3 +17,19 @@ from .segwit_addr import (
 from .segwit_addr import (
     encode as segwit_addr_encode,
 )
+
+__all__ = [
+    "bech32_decode",
+    "bech32_encode",
+    "Bech32Exception",
+    "BECH32M_CONST",
+    "CHARSET",
+    "Encoding",
+    "bech32_create_checksum",
+    "bech32_hrp_expand",
+    "bech32_polymod",
+    "bech32_verify_checksum",
+    "convertbits",
+    "segwit_addr_decode",
+    "segwit_addr_encode",
+]
